@@ -17,3 +17,15 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::prefix('/v1')->as('api::v1::')->group(function () {
+    Route::prefix('/admin')->as('admin::')->group(function () {
+        Route::get('/login', function (Request $request) {
+            return response()->json();
+        })->name('login');
+    });
+
+    Route::get('/products', function (Request $request) {
+        return response()->json();
+    })->name('products');
+});
