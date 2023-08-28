@@ -1,18 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\JwtToken;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Lcobucci\JWT\Configuration;
-use Lcobucci\JWT\Encoding\ChainedFormatter;
-use Lcobucci\JWT\Encoding\JoseEncoder;
-use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Token;
-use Lcobucci\JWT\Token\Builder;
-use Lcobucci\JWT\Token\RegisteredClaims;
 use Lcobucci\JWT\Validation\Constraint\HasClaimWithValue;
 use Lcobucci\JWT\Validation\Constraint\IdentifiedBy;
 use Lcobucci\JWT\Validation\Constraint\IssuedBy;
@@ -21,15 +20,6 @@ use Lcobucci\JWT\Validation\RequiredConstraintsViolated;
 
 class Authentication
 {
-    private static function getConfiguration(): Configuration
-    {
-        return Configuration::forAsymmetricSigner(
-            new Sha256(),
-            InMemory::file(storage_path('private_key.pem')),
-            InMemory::file(storage_path('public_key.pem'))
-        );
-    }
-
     public static function issue(User $user): string
     {
         $configuration = static::getConfiguration();
@@ -38,15 +28,7 @@ class Authentication
         $unique_id = Str::uuid()->toString();
         $end_of_day = $now->endOfDay();
 
-        JwtToken::query()
-            ->create([
-                'user_id' => $user->id,
-                'unique_id' => $unique_id,
-                'token_title' => __("Token generated at :timestamp", [
-                    "timestamp" => now()->format('d-m-Y H:i:s')
-                ]),
-                'expires_at' => $end_of_day,
-            ]);
+        static::createToken($user, $unique_id, $end_of_day);
 
         $token = $configuration->builder()
             ->issuedBy(env('APP_URL', 'http://127.0.0.1:8000'))
@@ -58,6 +40,22 @@ class Authentication
             ->getToken($configuration->signer(), $configuration->signingKey());
 
         return $token->toString();
+    }
+
+    public static function createToken(
+        User $user,
+        string $unique_id,
+        Carbon $end_of_day
+    ) {
+        return JwtToken::query()
+            ->create([
+                'user_id' => $user->id,
+                'unique_id' => $unique_id,
+                'token_title' => __('Token generated at :timestamp', [
+                    'timestamp' => now()->format('d-m-Y H:i:s'),
+                ]),
+                'expires_at' => $end_of_day,
+            ]);
     }
 
     public static function decode(string $token): null|Token
@@ -72,10 +70,15 @@ class Authentication
 
     public static function validates(Token $token): bool
     {
-        $configuration = static::getConfiguration();
+        $cfg = static::getConfiguration();
+        $rules = [
+            new SignedWith($cfg->signer(), $cfg->signingKey()),
+            new IssuedBy(env('APP_URL', 'http://127.0.0.1:8000')),
+        ];
         try {
-            $configuration->validator()->assert($token, new SignedWith($configuration->signer(), $configuration->signingKey()));
-            $configuration->validator()->assert($token, new IssuedBy(env('APP_URL', 'http://127.0.0.1:8000')));
+            foreach ($rules as $rule) {
+                $cfg->validator()->assert($token, $rule);
+            }
             return true;
         } catch (RequiredConstraintsViolated $exception) {
             return false;
@@ -85,12 +88,34 @@ class Authentication
     public static function belongsTo(Token $token, User $for): bool
     {
         $configuration = static::getConfiguration();
+        $rules = [
+            new IdentifiedBy($for->email),
+            new HasClaimWithValue('user_uuid', $for->uuid),
+        ];
         try {
-            $configuration->validator()->assert($token, new IdentifiedBy($for->email));
-            $configuration->validator()->assert($token, new HasClaimWithValue("user_uuid", $for->uuid));
+            foreach ($rules as $rule) {
+                $configuration->validator()
+                    ->assert($token, $rule);
+            }
             return true;
         } catch (RequiredConstraintsViolated $exception) {
             return false;
         }
+    }
+
+    public static function getUser(Token $token): null|User
+    {
+        $user_uuid = $token->claims()->get('user_uuid');
+
+        return User::query()->where('uuid', $user_uuid)->first() ?? null;
+    }
+
+    private static function getConfiguration(): Configuration
+    {
+        return Configuration::forAsymmetricSigner(
+            new Sha256(),
+            InMemory::file(storage_path('private_key.pem')),
+            InMemory::file(storage_path('public_key.pem'))
+        );
     }
 }

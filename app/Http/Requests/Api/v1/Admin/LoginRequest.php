@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Api\v1\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -11,7 +13,7 @@ class LoginRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return !auth()->check();
+        return ! auth()->check();
     }
 
     /**
@@ -23,7 +25,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => 'required',
-            'password' => 'required'
+            'password' => 'required',
         ];
     }
 }
