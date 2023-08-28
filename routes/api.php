@@ -20,9 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('/v1')->as('api::v1::')->group(function () {
     Route::prefix('/admin')->as('admin::')->group(function () {
-        Route::get('/login', function (Request $request) {
-            return response()->json();
-        })->name('login');
+        Route::post('/login', \App\Http\Controllers\Api\v1\Admin\LoginController::class)
+            ->name('login');
     });
 
     Route::get('/products', function (Request $request) {
