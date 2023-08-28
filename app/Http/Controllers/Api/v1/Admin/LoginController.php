@@ -18,6 +18,7 @@ class LoginController extends Controller
     {
         $user = User::query()
             ->where('email', $request->input('email'))
+            ->where('is_admin', true)
             ->first();
 
         if ($user && Hash::check($request->input('password'), $user->password)) {
