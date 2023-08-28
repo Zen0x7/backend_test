@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('address',255);
             $table->string('phone_number',255);
             $table->tinyInteger('is_marketing')->default(0);
-            $table->rememberToken();
             $table->timestamps();
             $table->timestamp('last_login_at')->nullable();
         });
