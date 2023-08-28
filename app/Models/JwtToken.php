@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,12 +12,7 @@ class JwtToken extends Model
     use HasFactory;
 
     /**
-     * @var string
-     */
-    public $table = 'jwt_tokens';
-
-    /**
-     * @var array
+     * @var string[]
      */
     protected $fillable = [
         'unique_id',
