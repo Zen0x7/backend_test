@@ -20,7 +20,7 @@ trait ValidatesToken
             foreach ($rules as $rule) {
                 $cfg->validator()->assert($token, $rule);
             }
-            return true;
+            return !$token->isExpired(now()->toDateTimeImmutable());
         } catch (RequiredConstraintsViolated $exception) {
             return false;
         }

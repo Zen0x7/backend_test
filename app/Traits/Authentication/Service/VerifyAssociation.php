@@ -2,6 +2,7 @@
 
 namespace App\Traits\Authentication\Service;
 
+use App\Models\JwtToken;
 use App\Models\User;
 use Lcobucci\JWT\Token;
 use Lcobucci\JWT\Validation\Constraint\HasClaimWithValue;
@@ -22,7 +23,11 @@ trait VerifyAssociation
                 $configuration->validator()
                     ->assert($token, $rule);
             }
-            return true;
+            return $token->claims()->has('unique_id') &&
+                $for->tokens()
+                    ->where('unique_id', $token->claims()->get('unique_id'))
+                    ->whereNull('expires_at')
+                    ->exists();
         } catch (RequiredConstraintsViolated $exception) {
             return false;
         }
