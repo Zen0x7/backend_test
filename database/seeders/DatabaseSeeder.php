@@ -23,5 +23,9 @@ class DatabaseSeeder extends Seeder
              'address' => 'Ash Lane, Rustington, Littlehampton, West Sussex, BN16 3BZ',
              'phone_number' => '+44(0)208 1919 438',
          ]);
+
+        $users = \App\Models\User::factory(3)->create([
+            "is_admin" => false
+        ]);
     }
 }
