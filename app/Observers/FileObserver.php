@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\File;
-use Illuminate\Support\Str;
+use App\Services\UUID;
 
 class FileObserver
 {
@@ -12,7 +12,7 @@ class FileObserver
      */
     public function creating(File $file): void
     {
-        $file->uuid = Str::uuid();
+        $file->uuid = UUID::retrieve();
     }
 
     /**
