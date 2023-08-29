@@ -22,6 +22,11 @@ class LoginController extends Controller
 
         if ($user && Hash::check($request->input('password'), $user->password)) {
             $token = Authentication::issue($user);
+
+            $user->update([
+                'last_login_at' => now(),
+            ]);
+
             return response()->json([
                 'success' => 1,
                 'data' => ['token' => $token],
