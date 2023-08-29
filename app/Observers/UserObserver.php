@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Models\User;
-use Illuminate\Support\Str;
+use App\Services\UUID;
 
 class UserObserver
 {
@@ -12,7 +12,7 @@ class UserObserver
      */
     public function creating(User $user): void
     {
-        $user->uuid = Str::uuid();
+        $user->uuid = UUID::retrieve();
     }
 
     /**

@@ -53,7 +53,7 @@ class UserListingController extends Controller
                 $request->has('marketing'),
                 fn ($q) => $q->where('is_marketing', $request->query('marketing'))
             )
-            ->paginate($request->has('limit') ? $request->input('limit') : 10);
+            ->paginate($request->has('limit') ? $request->input('limit') : 30);
 
         return response()->json($users);
     }
