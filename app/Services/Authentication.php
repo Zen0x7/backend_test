@@ -22,16 +22,13 @@ final class Authentication
     public static function createToken(
         User $user,
         string $unique_id,
-        Carbon $end_of_day
     ) {
-        return JwtToken::query()
+        return $user->tokens()
             ->create([
-                'user_id' => $user->id,
                 'unique_id' => $unique_id,
                 'token_title' => __('Token generated at :timestamp', [
                     'timestamp' => now()->format('d-m-Y H:i:s'),
                 ]),
-                'expires_at' => $end_of_day,
             ]);
     }
 
