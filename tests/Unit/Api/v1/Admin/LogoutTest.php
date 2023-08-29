@@ -13,11 +13,11 @@ class LogoutTest extends TestCase
      */
     public function test_example(): void
     {
-        $user = User::query()
+        $admin = User::query()
             ->where('email', 'admin@buckhill.co.uk')
             ->first();
 
-        $token = Authentication::issue($user);
+        $token = Authentication::issue($admin);
 
         $response = $this->json('GET', route('api::v1::admin::logout'), [], ["Authorization" => "Bearer {$token}"]);
 

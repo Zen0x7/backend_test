@@ -65,6 +65,7 @@ class MiddlewareProtectionTest extends TestCase
         $fake = \App\Models\User::factory()->make([
             "is_admin" => false
         ]);
+
         $password = Str::random();
 
         $response = $this->json("PUT", route("api::v1::admin::user-edit", $other), [

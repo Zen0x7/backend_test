@@ -15,9 +15,7 @@ class UserDeleteTest extends TestCase
             ->where('email', 'admin@buckhill.co.uk')
             ->first();
 
-        $user = User::query()->latest()->first();
-
-        $user->update([
+        $user = User::factory()->create([
             "is_admin" => false,
         ]);
 
@@ -37,7 +35,9 @@ class UserDeleteTest extends TestCase
 
     public function test_should_respond_unauthorized(): void
     {
-        $user = User::query()->latest()->first();
+        $user = User::factory()->create([
+            "is_admin" => false,
+        ]);
 
         $response = $this->json("DELETE", route("api::v1::admin::user-delete", $user));
 

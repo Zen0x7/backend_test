@@ -11,12 +11,12 @@ class LoginTest extends TestCase
 {
     public function test_authentication_success(): void
     {
-        $user = User::query()
+        $admin = User::query()
             ->where('email', 'admin@buckhill.co.uk')
             ->first();
 
         $response = $this->json("POST", route('api::v1::admin::login'), [
-            "email" => $user->email,
+            "email" => $admin->email,
             "password" => "admin"
         ]);
 
@@ -34,6 +34,6 @@ class LoginTest extends TestCase
         $token = Authentication::decode(json_decode($response->content())->data->token);
 
         $this->assertTrue(Authentication::validates($token));
-        $this->assertTrue(Authentication::belongsTo($token, $user));
+        $this->assertTrue(Authentication::belongsTo($token, $admin));
     }
 }

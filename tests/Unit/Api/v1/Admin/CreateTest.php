@@ -13,11 +13,11 @@ class CreateTest extends TestCase
 {
     public function test_should_respond_success(): void
     {
-        $user = User::query()
+        $admin = User::query()
             ->where('email', 'admin@buckhill.co.uk')
             ->first();
 
-        $token = Authentication::issue($user);
+        $token = Authentication::issue($admin);
 
         $fake = User::factory()->make();
 
