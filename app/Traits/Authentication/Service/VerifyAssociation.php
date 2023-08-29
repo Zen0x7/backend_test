@@ -2,7 +2,6 @@
 
 namespace App\Traits\Authentication\Service;
 
-use App\Models\JwtToken;
 use App\Models\User;
 use Lcobucci\JWT\Token;
 use Lcobucci\JWT\Validation\Constraint\HasClaimWithValue;

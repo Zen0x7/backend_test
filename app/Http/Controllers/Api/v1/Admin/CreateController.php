@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\Admin\CreateRequest;
 use App\Models\User;
 use App\Services\Authentication;
-use Illuminate\Http\Request;
 
 class CreateController extends Controller
 {

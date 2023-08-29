@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Models\JwtToken;
 use App\Models\User;
 use App\Traits\Authentication\Service\IssueToken;
 use App\Traits\Authentication\Service\ValidatesToken;
 use App\Traits\Authentication\Service\VerifyAssociation;
-use Illuminate\Support\Carbon;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 use Lcobucci\JWT\Signer\Key\InMemory;

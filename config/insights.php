@@ -12,7 +12,7 @@ declare(strict_types=1);
     ],
 
     'add' => [],
-    
+
     'remove' => [
         // Code
         \SlevomatCodingStandard\Sniffs\TypeHints\DeclareStrictTypesSniff::class,          // Declare strict types
