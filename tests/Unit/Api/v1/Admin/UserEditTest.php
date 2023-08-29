@@ -15,10 +15,8 @@ class UserEditTest extends TestCase
             ->where('email', 'admin@buckhill.co.uk')
             ->first();
 
-        $user = User::query()->latest()->first();
-
-        $user->update([
-            'is_admin' => false,
+        $user = User::factory()->create([
+            "is_admin" => false,
         ]);
 
         $token = Authentication::issue($admin);
