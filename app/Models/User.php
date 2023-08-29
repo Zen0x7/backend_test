@@ -12,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -40,6 +40,7 @@ class User extends Authenticatable
      * @var array<string>
      */
     protected $hidden = [
+        'id',
         'password',
         'remember_token',
     ];
@@ -53,4 +54,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
+    public function tokens() {
+        return $this->hasMany(JwtToken::class, 'user_id', 'id');
+    }
 }

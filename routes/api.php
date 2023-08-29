@@ -26,9 +26,20 @@ Route::prefix('/v1')->as('api::v1::')->group(function (): void {
             ->name('login');
 
         Route::middleware('auth.jwt')->group(function (): void {
-            Route::get('/user-listing', function (Request $request) {
-                return response()->json($request->user());
-            })->name('user-listing');
+            Route::get('/logout', \App\Http\Controllers\Api\v1\Admin\LogoutController::class)
+                ->name('logout');
+
+            Route::post('/create', \App\Http\Controllers\Api\v1\Admin\CreateController::class)
+                ->name('create');
+
+            Route::get('/user-listing', \App\Http\Controllers\Api\v1\Admin\UserListingController::class)
+                ->name('user-listing');
+
+            Route::put('/user-edit/{user}', \App\Http\Controllers\Api\v1\Admin\UserEditController::class)
+                ->name('user-edit');
+
+            Route::delete('/user-delete/{user}', \App\Http\Controllers\Api\v1\Admin\UserDeleteController::class)
+                ->name('user-delete');
         });
     });
 
