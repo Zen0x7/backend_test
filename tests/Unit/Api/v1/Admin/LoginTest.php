@@ -4,16 +4,17 @@ namespace Tests\Unit\Api\v1\Admin;
 
 use App\Models\User;
 use App\Services\Authentication;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_authentication_success(): void
     {
-        $admin = User::query()
-            ->where('email', 'admin@buckhill.co.uk')
-            ->first();
+        $admin = $this->createAdmin();
 
         $response = $this->json("POST", route('api::v1::admin::login'), [
             "email" => $admin->email,

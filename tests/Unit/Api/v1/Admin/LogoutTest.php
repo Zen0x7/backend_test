@@ -4,18 +4,19 @@ namespace Tests\Unit\Api\v1\Admin;
 
 use App\Models\User;
 use App\Services\Authentication;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class LogoutTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic unit test example.
      */
     public function test_token_expiration(): void
     {
-        $admin = User::query()
-            ->where('email', 'admin@buckhill.co.uk')
-            ->first();
+        $admin = $this->createAdmin();
 
         $token = Authentication::issue($admin);
 

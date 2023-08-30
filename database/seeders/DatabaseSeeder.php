@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,6 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
          $administrator = \App\Models\User::factory()->create([
+             'uuid' => Str::uuid()->toString(),
              'first_name' => 'Administrator',
              'last_name' => '',
              'email' => 'admin@buckhill.co.uk',

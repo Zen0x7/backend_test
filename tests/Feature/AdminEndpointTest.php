@@ -4,16 +4,18 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Services\Authentication;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class AdminEndpointTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_all_users_listing_of_non_admins(): void
     {
-        $admin = User::query()
-            ->where('email', 'admin@buckhill.co.uk')
-            ->first();
+        $admin = $this->createAdmin();
 
         $token = Authentication::issue($admin);
 
@@ -31,9 +33,7 @@ class AdminEndpointTest extends TestCase
 
     public function test_edit_and_delete_user_accounts(): void
     {
-        $admin = User::query()
-            ->where('email', 'admin@buckhill.co.uk')
-            ->first();
+        $admin = $this->createAdmin();
 
         $token = Authentication::issue($admin);
         $password = Str::random(32);

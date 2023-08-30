@@ -11,15 +11,17 @@ use Tests\TestCase;
 
 class MiddlewareProtectionTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_routes_are_xss_injection_secured(): void
     {
         $injection = "<p></p>";
 
-        $admin = User::query()
-            ->where('email', 'admin@buckhill.co.uk')
-            ->first();
+        $admin = $this->createAdmin();
 
-        $user = User::query()->latest()->first();
+        $user = \App\Models\User::factory()->create([
+            "is_admin" => false
+        ]);
 
         $user->update([
             'is_admin' => false,
@@ -47,9 +49,7 @@ class MiddlewareProtectionTest extends TestCase
 
     public function test_admin_routes_are_only_accessed_by_admins(): void
     {
-        $admin = User::query()
-            ->where('email', 'admin@buckhill.co.uk')
-            ->first();
+        $admin = $this->createAdmin();
 
         $non_authorized = \App\Models\User::factory()->create([
             "is_admin" => false

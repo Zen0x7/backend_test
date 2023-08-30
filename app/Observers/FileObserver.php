@@ -12,7 +12,7 @@ class FileObserver
      */
     public function creating(File $file): void
     {
-        $file->uuid = Str::uuid();
+        $file->uuid = Str::uuid()->toString();
     }
 
     /**

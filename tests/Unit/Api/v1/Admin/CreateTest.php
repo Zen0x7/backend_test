@@ -6,16 +6,17 @@ namespace Tests\Unit\Api\v1\Admin;
 use App\Models\File;
 use App\Models\User;
 use App\Services\Authentication;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class CreateTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_should_respond_success(): void
     {
-        $admin = User::query()
-            ->where('email', 'admin@buckhill.co.uk')
-            ->first();
+        $admin = $this->createAdmin();
 
         $token = Authentication::issue($admin);
 

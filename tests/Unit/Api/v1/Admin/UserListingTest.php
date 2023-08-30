@@ -10,11 +10,13 @@ class UserListingTest extends TestCase
 {
     public function test_should_respond_success(): void
     {
-        $user = User::query()
-            ->where('email', 'admin@buckhill.co.uk')
-            ->first();
+        $admin = $this->createAdmin();
 
-        $token = Authentication::issue($user);
+        $token = Authentication::issue($admin);
+
+        User::factory()->create([
+            "is_admin" => false,
+        ]);
 
         $response = $this->json("GET", route("api::v1::admin::user-listing"), [], ["Authorization" => "Bearer {$token}"]);
         $response->assertSuccessful()

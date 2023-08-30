@@ -4,16 +4,17 @@ namespace Tests\Unit\Api\v1\Admin;
 
 use App\Models\User;
 use App\Services\Authentication;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class UserEditTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_should_respond_success(): void
     {
-        $admin = User::query()
-            ->where('email', 'admin@buckhill.co.uk')
-            ->first();
+        $admin = $this->createAdmin();
 
         $user = User::factory()->create([
             "is_admin" => false,
@@ -59,7 +60,9 @@ class UserEditTest extends TestCase
 
     public function test_should_respond_unauthorized(): void
     {
-        $user = User::query()->latest()->first();
+        $user = User::factory()->create([
+            "is_admin" => false,
+        ]);
 
         $response = $this->json("PUT", route("api::v1::admin::user-edit", $user));
 

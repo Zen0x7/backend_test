@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Services\Authentication;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
@@ -12,15 +13,15 @@ use Tests\TestCase;
 
 class BearerTokenAuthenticationTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_token_shape_is_valid(): void
     {
-        $user = User::query()
-            ->where('email', 'admin@buckhill.co.uk')
-            ->first();
+        $admin = $this->createAdmin();
 
         $regex = "/^([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_=]+)\.([a-zA-Z0-9_\-\+\/=]*)/";
 
-        $token = Authentication::issue($user);
+        $token = Authentication::issue($admin);
 
         $random = Str::random(36);
 
@@ -41,11 +42,9 @@ class BearerTokenAuthenticationTest extends TestCase
 
     public function test_token_can_be_decoded(): void
     {
-        $user = User::query()
-            ->where('email', 'admin@buckhill.co.uk')
-            ->first();
+        $admin = $this->createAdmin();
 
-        $token = Authentication::issue($user);
+        $token = Authentication::issue($admin);
 
         $configuration = Configuration::forAsymmetricSigner(
             new Sha256(),

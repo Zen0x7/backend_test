@@ -11,11 +11,9 @@ class ProductsTest extends TestCase
 {
     public function test_authenticated_index(): void
     {
-        $user = User::query()
-            ->where('email', 'admin@buckhill.co.uk')
-            ->first();
+        $admin = $this->createAdmin();
 
-        $token = Authentication::issue($user);
+        $token = Authentication::issue($admin);
 
         $response = $this->json("GET", route("api::v1::products"), [], ["Authorization" => "Bearer {$token}"]);
 

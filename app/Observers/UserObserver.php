@@ -12,7 +12,7 @@ class UserObserver
      */
     public function creating(User $user): void
     {
-        $user->uuid = Str::uuid();
+        $user->uuid = Str::uuid()->toString();
     }
 
     /**
