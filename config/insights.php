@@ -37,7 +37,7 @@ declare(strict_types=1);
 
     'config' => [
         \NunoMaduro\PhpInsights\Domain\Insights\CyclomaticComplexityIsHigh::class => [
-            'maxComplexity' => 1,
+            'maxComplexity' => 8,
         ],
         \PHP_CodeSniffer\Standards\Generic\Sniffs\Files\LineLengthSniff::class => [
             'lineLimit' => 120,

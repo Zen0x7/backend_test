@@ -14,7 +14,7 @@ trait ValidatesToken
         Closure $next,
         Token|null $token
     ) {
-        if ($token && Authentication::validates($token)) {
+        if (Authentication::validates($token)) {
             $user = Authentication::getUser($token);
             return $this->authorize($request, $next, $user);
         }

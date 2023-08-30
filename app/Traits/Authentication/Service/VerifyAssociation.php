@@ -16,11 +16,10 @@ trait VerifyAssociation
         try {
             $configuration->validator()->assert($token, new IdentifiedBy($for->email));
             $configuration->validator()->assert($token, new HasClaimWithValue('user_uuid', $for->uuid));
-            return $token->claims()->has('unique_id') &&
-                $for->tokens()
-                    ->where('unique_id', $token->claims()->get('unique_id'))
-                    ->whereNull('expires_at')
-                    ->exists();
+            return $for->tokens()
+                ->where('unique_id', $token->claims()->get('unique_id'))
+                ->whereNull('expires_at')
+                ->exists();
         } catch (RequiredConstraintsViolated $exception) {
             return false;
         }

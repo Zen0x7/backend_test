@@ -9,7 +9,7 @@ use Lcobucci\JWT\Validation\RequiredConstraintsViolated;
 
 trait ValidatesToken
 {
-    public static function validates(Token $token): bool
+    public static function validates(Token|null $token): bool
     {
         $cfg = static::getConfiguration();
         $rules = [
