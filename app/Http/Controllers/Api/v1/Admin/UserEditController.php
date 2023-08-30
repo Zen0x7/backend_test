@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api\v1\Admin;
 
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\Admin\UserEditRequest;
-use App\Models\User;
 
 class UserEditController extends Controller
 {
@@ -20,12 +20,9 @@ class UserEditController extends Controller
             'password' => $request->input('password'),
             'address' => $request->input('address'),
             'phone_number' => $request->input('phone_number'),
-            'is_marketing' => $request->has('marketing') ? $request->input('marketing') : 0,
+            'is_marketing' => $request->input('marketing', 0),
+            'avatar' => $request->input('avatar', null)
         ];
-
-        if ($request->has('avatar')) {
-            $fields['avatar'] = $request->input('avatar');
-        }
 
         $user->update($fields);
 

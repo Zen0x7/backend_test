@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api\v1\Admin;
 
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\Admin\UserDeleteRequest;
-use App\Models\User;
 
 class UserDeleteController extends Controller
 {

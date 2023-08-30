@@ -13,15 +13,9 @@ trait VerifyAssociation
     public static function belongsTo(Token $token, User $for): bool
     {
         $configuration = static::getConfiguration();
-        $rules = [
-            new IdentifiedBy($for->email),
-            new HasClaimWithValue('user_uuid', $for->uuid),
-        ];
         try {
-            foreach ($rules as $rule) {
-                $configuration->validator()
-                    ->assert($token, $rule);
-            }
+            $configuration->validator()->assert($token, new IdentifiedBy($for->email));
+            $configuration->validator()->assert($token, new HasClaimWithValue('user_uuid', $for->uuid));
             return $token->claims()->has('unique_id') &&
                 $for->tokens()
                     ->where('unique_id', $token->claims()->get('unique_id'))

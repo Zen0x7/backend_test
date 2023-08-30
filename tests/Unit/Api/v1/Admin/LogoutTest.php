@@ -11,7 +11,7 @@ class LogoutTest extends TestCase
     /**
      * A basic unit test example.
      */
-    public function test_example(): void
+    public function test_token_expiration(): void
     {
         $admin = User::query()
             ->where('email', 'admin@buckhill.co.uk')

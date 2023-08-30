@@ -4,14 +4,14 @@ namespace App\Http\Requests\Api\v1\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserEditRequest extends FormRequest
+class UserEditRequest extends AdministratorRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->check() && auth()->user()->is_admin && ! $this->route('user')->is_admin;
+        return parent::authorize() && ! $this->route('user')->is_admin;
     }
 
     /**
@@ -30,7 +30,7 @@ class UserEditRequest extends FormRequest
             'avatar' => 'sometimes|uuid|exists:files,uuid',
             'address' => 'required',
             'phone_number' => 'required',
-            'is_marketing' => 'optional|boolean'
+            'is_marketing' => 'optional|boolean',
         ];
     }
 }

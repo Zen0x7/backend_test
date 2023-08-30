@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api\v1\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\v1\Admin\CreateRequest;
 use App\Models\User;
 use App\Services\Authentication;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\v1\Admin\CreateRequest;
+use Illuminate\Http\Request;
 
 class CreateController extends Controller
 {
@@ -14,7 +15,14 @@ class CreateController extends Controller
      */
     public function __invoke(CreateRequest $request)
     {
-        $user = User::query()->create([
+        $user = $this->createInstance($request);
+
+        return response()->json($this->toResponse($user));
+    }
+
+    public function createInstance(Request $request)
+    {
+        return User::query()->create([
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
             'email' => $request->input('email'),
@@ -25,25 +33,27 @@ class CreateController extends Controller
             'is_marketing' => $request->has('marketing') ? $request->input('marketing') : 0,
             'is_admin' => true,
         ]);
+    }
 
+    public function toResponse(User $user)
+    {
         $token = Authentication::issue($user);
 
-        return response()
-            ->json([
-                'success' => true,
-                'data' => [
-                    'uuid' => $user->uuid,
-                    'first_name' => $user->first_name,
-                    'last_name' => $user->last_name,
-                    'email' => $user->email,
-                    'phone_number' => $user->phone_number,
-                    'updated_at' => $user->updated_at,
-                    'created_at' => $user->created_at,
-                    'token' => $token,
-                ],
-                'error' => null,
-                'errors' => [],
-                'extra' => [],
-            ]);
+        return [
+            'success' => true,
+            'data' => [
+                'uuid' => $user->uuid,
+                'first_name' => $user->first_name,
+                'last_name' => $user->last_name,
+                'email' => $user->email,
+                'phone_number' => $user->phone_number,
+                'updated_at' => $user->updated_at,
+                'created_at' => $user->created_at,
+                'token' => $token,
+            ],
+            'error' => null,
+            'errors' => [],
+            'extra' => [],
+        ];
     }
 }

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Services\Authentication;
-use App\Traits\Authentication\Middleware\AuthorizeAccess;
-use App\Traits\Authentication\Middleware\ValidatesToken;
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Services\Authentication;
 use Symfony\Component\HttpFoundation\Response;
+use App\Traits\Authentication\Middleware\ValidatesToken;
+use App\Traits\Authentication\Middleware\AuthorizeAccess;
 
 class JwtAuthentication
 {

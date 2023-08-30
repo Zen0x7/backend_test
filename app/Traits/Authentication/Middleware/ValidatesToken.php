@@ -16,10 +16,7 @@ trait ValidatesToken
     ) {
         if ($token && Authentication::validates($token)) {
             $user = Authentication::getUser($token);
-
-            if ($user && Authentication::belongsTo($token, $user)) {
-                return $this->authorize($request, $next, $user);
-            }
+            return $this->authorize($request, $next, $user);
         }
         return response()->json([
             'success' => 0,

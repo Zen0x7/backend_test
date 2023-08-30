@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\v1\Admin;
 
+use App\Models\JwtToken;
+use Illuminate\Support\Str;
+use App\Services\Authentication;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\Admin\LogoutRequest;
-use App\Models\JwtToken;
-use App\Services\Authentication;
-use Illuminate\Support\Str;
 
 class LogoutController extends Controller
 {
@@ -20,7 +20,8 @@ class LogoutController extends Controller
         $token = Str::replaceFirst('Bearer ', '', $request->header('Authorization'));
         $token = Authentication::decode($token);
 
-        JwtToken::query()
+        $request->user()
+            ->tokens()
             ->where('unique_id', $token->claims()->get('unique_id'))
             ->update([
                 'expires_at' => now(),

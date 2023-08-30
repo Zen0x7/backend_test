@@ -26,7 +26,6 @@ class AdminEndpointTest extends TestCase
 
         foreach ($users as $user) {
             $response->assertSee($user->email);
-            $user->delete();
         }
     }
 

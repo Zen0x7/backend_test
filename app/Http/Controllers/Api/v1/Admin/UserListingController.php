@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api\v1\Admin;
 
+use App\Services\Paginator;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\Admin\UserListingRequest;
-use App\Models\User;
-use Carbon\Carbon;
 
 class UserListingController extends Controller
 {
@@ -15,14 +16,12 @@ class UserListingController extends Controller
     public function __invoke(UserListingRequest $request)
     {
         $users = User::query()
-//            ->where('is_admin', false)
+            ->where('is_admin', false)
             ->when(
                 $request->has('sortBy'),
                 fn ($q) => $q->sortBy(
                     $request->query('sortBy'),
-                    $request->has('desc') ?
-                        ((bool) $request->input('desc') === true ? 'desc' : 'asc') :
-                        'asc'
+                    $request->input('desc') === true ? 'desc' : 'asc'
                 )
             )
             ->when(
@@ -52,7 +51,7 @@ class UserListingController extends Controller
                 $request->has('marketing'),
                 fn ($q) => $q->where('is_marketing', $request->query('marketing'))
             )
-            ->paginate($request->has('limit') ? $request->input('limit') : 30);
+            ->paginate(Paginator::fromRequest($request));
 
         return response()->json($users);
     }

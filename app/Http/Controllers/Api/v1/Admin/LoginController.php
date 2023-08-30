@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\v1\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\v1\Admin\LoginRequest;
 use App\Models\User;
 use App\Services\Authentication;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Api\v1\Admin\LoginRequest;
 
 class LoginController extends Controller
 {
