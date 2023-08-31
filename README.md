@@ -1,6 +1,6 @@
 # Deployment
 
-> If you have `openssl`, `docker` and ports `80`, `443` and `3306` are available then use `deployment.sh` for fast checking purposes.
+> If you have `openssl`, `docker` and ports `80`, `443` and `3306` are available then use `deployment.sh` to start.
 
 ## Setup
 
@@ -12,9 +12,9 @@ openssl ecparam -name secp256r1 -genkey -noout -out private_key.pem
 openssl ec -in private_key.pem -pubout -out public_key.pem
 ```
 
-## Composing
+## Compose
 
-Use Docker to implement this project on your local machine.
+Use Docker to run this project on your local machine.
 
 ```
 docker compose up -d
@@ -23,9 +23,21 @@ docker compose exec app php artisan migrate
 docker compose exec app php artisan db:seed
 ```
 
+## Usage
+
+By running `composing commands` you'll have the application running over port `80`.
+
+The database server will be using port `3306`, default credentials are `buckhill` and `secret_password` and database name is `buckhill`.
+
+As required, once seeds, default admin credentials are `admin@buckhill.co.uk` and `admin`.
+
 ## Testing and insights
 
 ```
 docker compose exec app php artisan test
 docker compose exec app php artisan insights
 ```
+
+## Coding
+
+[API Prefix](https://github.com/SpiritSaint/backend_test/issues/5), [Bearer Token Authentication](https://github.com/SpiritSaint/backend_test/issues/6), [Middleware Protection](https://github.com/SpiritSaint/backend_test/issues/7) and [Admin endpoint](https://github.com/SpiritSaint/backend_test/issues/8) are fully implemented features. 
