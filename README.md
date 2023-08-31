@@ -25,7 +25,7 @@ docker compose exec app php artisan db:seed
 
 ## Usage
 
-By running `composing commands` you'll have the application running over port `80`.
+By following `compose` section you'll have the application running over port `80`.
 
 The database server will be using port `3306`, default credentials are `buckhill` and `secret_password` and database name is `buckhill`.
 
