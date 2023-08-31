@@ -31,6 +31,8 @@ The database server will be using port `3306`, default credentials are `buckhill
 
 As required, once seeds, default admin credentials are `admin@buckhill.co.uk` and `admin`.
 
+OpenApi specification can be viewed by reaching the endpoint `/api/documentation`.
+
 ## Testing and insights
 
 ```
