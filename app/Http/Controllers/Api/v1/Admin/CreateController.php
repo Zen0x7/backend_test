@@ -8,11 +8,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\Admin\CreateRequest;
 use Illuminate\Http\Request;
 
+use OpenApi\Attributes as OA;
+
 class CreateController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
+    #[OA\Post(path: '/api/v1/admin/create')]
+    #[OA\Response(response: '200', description: 'Success')]
+    #[OA\Response(response: '401', description: 'Unauthorized')]
     public function __invoke(CreateRequest $request)
     {
         $user = $this->createInstance($request);
