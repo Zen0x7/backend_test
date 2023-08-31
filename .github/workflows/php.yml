@@ -25,7 +25,7 @@ jobs:
           mkdir -p database
           touch database/database.sqlite
           openssl ecparam -name secp256r1 -genkey -noout -out storage/private_key.pem
-          openssl ec -in private_key.pem -pubout -out storage/public_key.pem
+          openssl ec -in storage/private_key.pem -pubout -out storage/public_key.pem
       - name: Execute tests (Unit and Feature tests) via PHPUnit
         env:
           DB_CONNECTION: sqlite
