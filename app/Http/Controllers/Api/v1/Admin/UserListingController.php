@@ -8,11 +8,13 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\v1\Admin\UserListingRequest;
 
+use OpenApi\Attributes as OA;
+
 class UserListingController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
+    #[OA\Put(path: '/api/v1/admin/user-listing')]
+    #[OA\Response(response: '200', description: 'Success')]
+    #[OA\Response(response: '401', description: 'Unauthorized')]
     public function __invoke(UserListingRequest $request)
     {
         $users = User::query()
