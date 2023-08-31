@@ -4,7 +4,7 @@
 
 ## Setup
 
-In order to implement asymmetric encryption you'll need to provide public and private keys. Execute the following command to generate both into storage path.
+In order to implement asymmetric token encryption you'll need to provide public and private keys. Execute the following command to generate both into storage path.
 
 ```shell
 cd storage
