@@ -40,6 +40,14 @@ docker compose exec app php artisan test
 docker compose exec app php artisan insights
 ```
 
+## Score
+
+|  Code   | Complexity  |  Architecture  |  Style  |
+|:-------:|:-----------:|:--------------:|:-------:|
+|  94.4%  |    85.7%    |     87.5%      |  90.9%  |
+
+You can verify the result based on [last running action logs](https://github.com/SpiritSaint/backend_test/actions).
+
 ## Coding
 
 [API Prefix](https://github.com/SpiritSaint/backend_test/issues/5), [Bearer Token Authentication](https://github.com/SpiritSaint/backend_test/issues/6), [Middleware Protection](https://github.com/SpiritSaint/backend_test/issues/7) and [Admin endpoint](https://github.com/SpiritSaint/backend_test/issues/8) are fully implemented features. 
