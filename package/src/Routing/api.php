@@ -2,5 +2,5 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get("/api/bacs", \SpiritSaint\LaravelBacs\Http\Controllers\IndexController::class);
+Route::get("/api/v1/bacs", \SpiritSaint\LaravelBacs\Http\Controllers\IndexController::class);
 

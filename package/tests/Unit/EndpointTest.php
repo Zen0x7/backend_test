@@ -12,7 +12,7 @@ it('should return valid VOL and HDR1 records when fast_payment is marked as fals
     $creation_date = "2030-01-01";
     $expiration_at = "2030-01-05";
 
-    json("GET", "/api/bacs?serial_number={$serial_number}&sun={$sun}&creation_date={$creation_date}&expiration_date={$expiration_at}&fast_payment=0")
+    json("GET", "/api/v1/bacs?serial_number={$serial_number}&sun={$sun}&creation_date={$creation_date}&expiration_date={$expiration_at}&fast_payment=0")
         ->assertSee("VOL1")
         ->assertSee("HDR1A")
         ->assertSee($serial_number)
@@ -30,7 +30,7 @@ it('should return valid VOL and HDR1 records when fast_payment is marked as true
     $year = now()->format('y');
     $day_of_year = str_pad(now()->dayOfYear, 3, "0", STR_PAD_LEFT);
 
-    json("GET", "/api/bacs?serial_number={$serial_number}&sun={$sun}&fast_payment=1")
+    json("GET", "/api/v1/bacs?serial_number={$serial_number}&sun={$sun}&fast_payment=1")
         ->assertSee("VOL1")
         ->assertSee("HDR1A")
         ->assertSee($serial_number)
@@ -45,7 +45,7 @@ it('should return valid VOL and HDR1 records when sun is not defined and is mark
     $year = now()->format('y');
     $day_of_year = str_pad(now()->dayOfYear, 3, "0", STR_PAD_LEFT);
 
-    json("GET", "/api/bacs?serial_number={$serial_number}&marker=hsbc&fast_payment=1")
+    json("GET", "/api/v1/bacs?serial_number={$serial_number}&marker=hsbc&fast_payment=1")
         ->assertSee("VOL1")
         ->assertSee("HDR1A")
         ->assertSee($serial_number)
@@ -60,7 +60,7 @@ it('should return valid VOL and HDR1 records when sun is not defined and is mark
     $creation_date = "2030-01-01";
     $expiration_at = "2030-01-05";
 
-    json("GET", "/api/bacs?serial_number={$serial_number}&marker=sage&creation_date={$creation_date}&expiration_date={$expiration_at}&fast_payment=0")
+    json("GET", "/api/v1/bacs?serial_number={$serial_number}&marker=sage&creation_date={$creation_date}&expiration_date={$expiration_at}&fast_payment=0")
         ->assertSee("VOL1")
         ->assertSee("HDR1A")
         ->assertSee($serial_number)
