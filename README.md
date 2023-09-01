@@ -48,6 +48,10 @@ docker compose exec app php artisan insights
 
 You can verify the result based on [last running action logs](https://github.com/SpiritSaint/backend_test/actions).
 
-## Coding
+## Main Task
 
 [API Prefix](https://github.com/SpiritSaint/backend_test/issues/5), [Bearer Token Authentication](https://github.com/SpiritSaint/backend_test/issues/6), [Middleware Protection](https://github.com/SpiritSaint/backend_test/issues/7) and [Admin endpoint](https://github.com/SpiritSaint/backend_test/issues/8) are fully implemented features. 
+
+## Level 5 Challenge: "BACS Implementation"
+
+Directory `package` includes the source code of the feature.
