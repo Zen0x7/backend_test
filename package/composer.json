@@ -1,0 +1,64 @@
+{
+    "name": "spiritsaint/laravel-bacs",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "SpiritSaint\\LaravelBacs\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ian Torres",
+            "email": "iantorres@outlook.com"
+        }
+    ],
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "php -r \"mkdir('bootstrap');\"",
+            "php -r \"mkdir('bootstrap'.DIRECTORY_SEPARATOR.'cache');\"",
+            "php -r \"mkdir('src'.DIRECTORY_SEPARATOR.'Http');\"",
+            "php -r \"mkdir('src'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Controllers');\"",
+            "php -r \"mkdir('src'.DIRECTORY_SEPARATOR.'Http'.DIRECTORY_SEPARATOR.'Middleware');\"",
+            "php -r \"mkdir('routes');\"",
+            "php -r \"mkdir('storage');\"",
+            "php -r \"mkdir('storage'.DIRECTORY_SEPARATOR.'framework');\"",
+            "php -r \"mkdir('storage'.DIRECTORY_SEPARATOR.'framework'.DIRECTORY_SEPARATOR.'views');\""
+        ]
+    },
+    "require": {
+        "php": "^8.1",
+        "illuminate/support": "*",
+        "illuminate/http": "*",
+        "zircote/swagger-php": "^4.7",
+        "illuminate/routing": "*",
+        "illuminate/validation": "*",
+        "illuminate/auth": "*",
+        "illuminate/session": "*"
+    },
+    "require-dev": {
+        "mockery/mockery": "^1.5",
+        "orchestra/testbench": "^8.0",
+        "pestphp/pest": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.0"
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SpiritSaint\\LaravelBacs\\Providers\\ServiceProvider"
+            ]
+        }
+    }
+}
