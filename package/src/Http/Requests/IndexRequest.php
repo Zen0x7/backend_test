@@ -3,8 +3,9 @@
 namespace SpiritSaint\LaravelBacs\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\RequiredIf;
+use SpiritSaint\LaravelBacs\Rules\SunRequired;
+use SpiritSaint\LaravelBacs\Rules\FasterPayment;
+use SpiritSaint\LaravelBacs\Rules\MarkerRequired;
 
 class IndexRequest extends FormRequest
 {
@@ -20,15 +21,11 @@ class IndexRequest extends FormRequest
                 'required', 'alpha_num', 'size:6'
             ],
             'marker' => [
-                Rule::requiredIf(
-                    fn() => $this->has('serial_number') && !$this->has('sun')
-                ),
+                MarkerRequired::validates($this),
                 'in:hsbc,sage'
             ],
             'sun' => [
-                Rule::requiredIf(
-                    fn() => $this->has('serial_number') && !$this->has('marker')
-                ),
+                SunRequired::validates($this),
                 'size:6'
             ],
             'generation_number' => [
@@ -42,16 +39,12 @@ class IndexRequest extends FormRequest
                 'size:2',
             ],
             'creation_date' => [
-                Rule::requiredIf(
-                    fn() => !$this->has('fast_payment')
-                ),
+                FasterPayment::validates($this),
                 'date_format:Y-m-d',
                 'after:yesterday',
             ],
             'expiration_date' => [
-                Rule::requiredIf(
-                    fn() => !$this->has('fast_payment')
-                ),
+                FasterPayment::validates($this),
                 'date_format:Y-m-d',
                 'after:creation_date',
             ],

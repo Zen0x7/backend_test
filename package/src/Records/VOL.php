@@ -2,12 +2,12 @@
 
 namespace SpiritSaint\LaravelBacs\Records;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class VOL
 {
-    public static function fromRequest(Request $request)
+    public static function fromRequest(Request $request): string
     {
         return implode([
             'VOL', // Label identifier

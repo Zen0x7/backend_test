@@ -2,12 +2,10 @@
 
 namespace SpiritSaint\LaravelBacs\Http\Controllers;
 
-
-use SpiritSaint\LaravelBacs\Http\Requests\IndexRequest;
-use SpiritSaint\LaravelBacs\Records\HDR1;
-use SpiritSaint\LaravelBacs\Records\VOL;
-
 use OpenApi\Attributes as OA;
+use SpiritSaint\LaravelBacs\Records\VOL;
+use SpiritSaint\LaravelBacs\Records\HDR1;
+use SpiritSaint\LaravelBacs\Http\Requests\IndexRequest;
 
 #[OA\Info(version: "1.0.0", title: "BACS - Swagger Documentation")]
 class IndexController
