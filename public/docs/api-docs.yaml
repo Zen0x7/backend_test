@@ -65,7 +65,7 @@ paths:
           description: Success
         '401':
           description: Unauthorized
-  /api/bacs:
+  /api/v1/bacs:
     get:
       operationId: bdfd7b90fc16856aad8db2a99ae14e6f
       parameters:
