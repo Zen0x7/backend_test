@@ -1,3 +1,5 @@
+> Company reject my process just because they don't like the performance. Yeah, agree with the dot comment, assholes.
+
 # Deployment
 
 > If you have `openssl`, `docker` and ports `80`, `443` and `3306` are available then use `deployment.sh` to start.
